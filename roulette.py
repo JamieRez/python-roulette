@@ -1,5 +1,3 @@
-'''Work on generating a random number and color first.'''
-
 import random
 import time
 import sys
@@ -76,7 +74,5 @@ def payout(caseString, userBetMoney):
 
 def play_game():
     checkResults(takeBet(), roll_ball())
-
-
 
 play_game()
