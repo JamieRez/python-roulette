@@ -1,6 +1,8 @@
 '''Work on generating a random number and color first.'''
 
 import random
+import time
+import sys
 
 bank_account = 1000
 bet_amount = 0
@@ -18,23 +20,40 @@ def takeBet():
         userBetChoice = raw_input("Make a Bet!\nEnter a number between 0 and 37, or 00 (enter 'color' to just pick a color): ")
     if userBetChoice == "color":
         while not userBetChoice == "black" and not userBetChoice == "red" and not userBetChoice == "green":
-            userBetChoice = raw_input("Enter a color ('black' , 'red' , 'green')")
+            userBetChoice = raw_input("Enter a color ('black' , 'red' , 'green'): ")
+        userBetChoice = userBetChoice[0].upper() + userBetChoice[1:]
     return userBetChoice
 
 
 def roll_ball():
     ballLandNumber = random.randint(0, 37)
     if ballLandNumber in blackNums:
-        ballColor = "black"
+        ballColor = "Black"
     elif ballLandNumber in redNums:
-        ballColor = "red"
+        ballColor = "Red"
     else:
-        ballColor = "green"
+        ballColor = "Green"
     return([ballLandNumber, ballColor])
 
 
-def checkResults():
-    pass
+def checkResults(userBetChoice, ballLandArr):
+    loadBar()
+    print("Done!")
+    print("Ball Landed on " + ballLandArr[1] + " " + str(ballLandArr[0]))
+    print("You chose " + userBetChoice)
+
+
+def loadBar():
+    print("Rolling the Ball!")
+    for i in range(0, 4):
+        loadingString = ""
+        sys.stdout.write('\x1b[2K')
+        for j in range(0, 8):
+            time.sleep(0.05)
+            loadingString += "~"
+            sys.stdout.write("\r" + loadingString)
+            sys.stdout.flush()
+    sys.stdout.write('\x1b[2K')
 
 
 def payout():
@@ -43,8 +62,8 @@ def payout():
 
 
 def play_game():
-    print(takeBet())
-    print(roll_ball())
+    checkResults(takeBet(), roll_ball())
+
 
 
 play_game()
